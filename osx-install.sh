@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# fail fast
+# fail fast 
 set -e 
 exec 2>&1
 

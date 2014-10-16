@@ -1,0 +1,5 @@
+#!/bin/bash
+# Save will write the content and close the window
+
+echo 'put' | 9p write acme/$winid/ctl
+echo 'del'  | 9p write acme/$winid/ctl
