@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# run B but then wait for the file to change.
+# great to set as $EDITOR.
+# it will exit once the file has been closed in acme
+
+PATH=$(9 sh -c 'echo $PLAN9')/bin:$PATH
+
+B "$@"
+echo editing "$@"
+while sleep 1
+do
+	nstat=$(9p read acme/index|awk '{print $6}'|grep "$@")
+	if [ "x$nstat" = "x" ]
+	then
+		exit
+	fi
+done
+
