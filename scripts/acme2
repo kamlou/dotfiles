@@ -12,4 +12,4 @@ export PATH PLAN9 PS1
 
 [[ ! -f $HOME/acme.dump ]] || touch $HOME/acme.dump
 
-exec acme -f $FONT -l $ACME_DUMP "%@"
+exec acme -f $FONT -l $ACME_DUMP "%@" &
