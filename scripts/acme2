@@ -1,8 +1,15 @@
 #!/bin/sh
-PATH=$PATH:$P9P/bin
+
 FONT=/mnt/font/Verdana/13a/font
 ACME_DUMP=$HOME/acme.dump
+# move path from head to tail
+# this will ensure bash scripts that use gnu tools run
+PATH=$PATH:$P9P/bin
+PLAN9=$P9P
+PS1="$(whoami)=; "
+
+export PATH PLAN9 PS1
 
 [[ ! -f $HOME/acme.dump ]] || touch $HOME/acme.dump
 
-acme -f $FONT -l $ACME_DUMP
+exec acme -f $FONT -l $ACME_DUMP "%@"
