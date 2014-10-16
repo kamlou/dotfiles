@@ -1,4 +1,4 @@
-font=/mnt/font/Menlo-Regular/12a/font
+font=/mnt/font/Verdana/13a/font
 tabstop=4
 alias acme="9 acme -f $font -l $HOME/acme.dump"
 EDITOR="9 F"

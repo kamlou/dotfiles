@@ -14,6 +14,31 @@ case $(uname -s) in
 	;;
 esac
 
+function errf()
+{
+	r=$?
+	cmd="$BASH_COMMAND"
+	line="${BASH_LINENO[0]}"
+	echo "--> Barfed at $cmd:$line, exiting"
+	exit $r
+}
+
+function skipcopy()
+{
+	f1=$1
+	f2=$2
+	cmp -s $f1 $f2
+	if [ $? -ne 0 ]; then
+		echo "--> .. $(basename $f1)"
+		return 1
+	else
+		echo "--> .. skipping $(basename $f1)"
+		return 0
+	fi
+}
+
+trap errf ERR
+
 DOCK_MOD="
 <dict> <key>tile-data</key> <dict> <key>file-data</key> 
 <dict> <key>_CFURLString</key> <string>%s</string> 
@@ -85,13 +110,26 @@ fi
 
 # setting up dot files
 if [ -d $HOME/.profile.d ]; then
-	echo "--> Dotfiles home $HOME/.profile.d already exists, skipping"
+	echo "--> ! Dotfiles home $HOME/.profile.d already exists, updating"
 else
-	echo "--> Populating dotfiles"
-	cmd=$(grep -o 'for profile in $HOME/.profile.d/*.sh; do source $profile; done' $HOME/.profile)
-	if [ -z "$cmd" ]; then
-		echo 'for profile in $HOME/.profile.d/*.sh; do source $profile; done' >> $HOME/.profile
-	else
-		echo 'already there'
-	fi
+	mkdir -p $HOME/.profile.d
+fi
+
+if [ ! $(egrep -o '\.profile\.d' $HOME/.profile) ]; then
+	echo '--> Enabling $HOME/.profile.d in $HOME/.profile ..'
+	echo 'for profile in $HOME/.profile.d/*.sh; do source $profile; done' >> $HOME/.profile
+fi
+
+echo "--> Populating dotfiles"
+for f in ./profile.d/*; do
+	skipcopy $f $HOME/.profile.d/$(basename $f) || cp -p $f $HOME/.profile.d
+done
+
+# load bin files
+echo "--> Installing scripts into $HOME/bin"
+[[ -d $HOME/bin ]] || mkdir -p $HOME/bin
+if [ -d $HOME/bin ]; then
+	for f in ./scripts/*; do
+		skipcopy $f $HOME/bin/$(basename $f) || cp -p $f $HOME/bin
+	done
 fi

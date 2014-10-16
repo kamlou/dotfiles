@@ -1,0 +1,16 @@
+/Users/klou
+/mnt/font/Verdana/13a/font
+/lib/font/bit/lucm/unicode.9.font
+  0.0000000  38.4525205  62.5439625
+w win Newcol Kill Putall Dump Exit 
+c          0 New Cut Paste Snarf Sort Zerox Delcol 
+c          1 New Cut Paste Snarf Sort Zerox Delcol 
+c          2 New Cut Paste Snarf Sort Zerox Delcol 
+f          0           2           0           0   1.9565217 
+          2          38          10           1           0 /Users/klou/src/ Del Snarf Get | Look 
+f          1           1           0           0   1.9565217 
+          1          34         360           1           0 /Users/klou/Documents Del Snarf Get | Look 
+e          2           0           0           0   1.9565217 
+          7          50          10           0           1 /Users/klou/-win Del Snarf | Look  Send
+/Users/klou/
+win
