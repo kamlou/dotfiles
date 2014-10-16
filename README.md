@@ -1,4 +1,4 @@
 dotfiles
 ========
 
-Environment setup files and dotfiles
+xEnvironment setup files and dotfiles
