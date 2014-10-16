@@ -1,3 +1,8 @@
 #!/bin/sh
+PATH=$PATH:$P9P/bin
+FONT=/mnt/font/Verdana/13a/font
+ACME_DUMP=$HOME/acme.dump
 
-9 acme -f $FONT -l $ACME_DUMP
+[[ ! -f $HOME/acme.dump ]] || touch $HOME/acme.dump
+
+acme -f $FONT -l $ACME_DUMP
