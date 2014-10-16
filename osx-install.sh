@@ -130,6 +130,6 @@ echo "--> Installing scripts into $HOME/bin"
 [[ -d $HOME/bin ]] || mkdir -p $HOME/bin
 if [ -d $HOME/bin ]; then
 	for f in ./scripts/*; do
-		skipcopy $f $HOME/bin/$(basename $f) || cp -p $f $HOME/bin
+		skipcopy $f $HOME/bin/$(basename $f) || (cp -p $f $HOME/bin && chmod +x $HOME/bin/$(basename $f))
 	done
 fi
