@@ -1,0 +1,24 @@
+#!/bin/sh
+
+exec 2>&1
+r=$(echo "$@"|awk '{print $1}')
+
+case $r in
+	require)
+		# todo: what will be best, is to do this magic in ruby
+		arg=$(echo "$@"|awk '{gsub(/'"'"'/, "", $2); print $2}')
+		gemname=$(echo $arg|awk -F"/" '{print $1}')
+		gem_path=$(gem which $gemname|grep -iv ERROR)
+		if [ ! -e "$gem_path" ]; then
+			echo "-> $gem_path"
+			exit 1 # no gem found
+	        else	
+			9 plumb $gem_path
+		fi
+	;;
+	*)
+		# nothing to do
+		echo "ERROR: can't plumb that"
+		exit 1
+	;;
+esac
