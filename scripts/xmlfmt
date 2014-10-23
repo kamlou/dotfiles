@@ -1,0 +1,11 @@
+#!/bin/sh
+
+PATH=$PATH:$(9 env sh -c 'echo $PLAN9')/bin; export PATH
+OUT=$(xmllint --format - 2>&1)
+
+if [ $? -ne 0 ]; then
+	/bin/echo -n '1,$' | 9p write acme/$winid/addr 
+	9p read acme/$winid/body|xmllint --format -|9p write acme/$winid/data
+else
+	echo "$OUT" | 9p write acme/$winid/wrsel
+fi
