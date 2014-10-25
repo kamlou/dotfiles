@@ -51,6 +51,8 @@ BREWS="
 	go
 	postgresql
 	tmux
+	hub
+	bzr
 "
 
 CASKS="
