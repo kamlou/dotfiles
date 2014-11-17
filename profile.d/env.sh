@@ -1,4 +1,11 @@
+#!/bin/bash -x
 PATH=$PATH:$HOME/bin
-PS1="$(whoami)=; "
+TTY=$(tty)
+
+if [ "$TTY" = "$SSH_TTY" ]; then
+	PS1="$(hostname -s)=ssh; "
+else
+	PS1="$(whoami)=; "
+fi
 
 export PATH PS1
