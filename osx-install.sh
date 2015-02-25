@@ -46,7 +46,7 @@ DOCK_MOD="
 </dict> </dict>"
 
 BREWS="
-	caskroom/cask/brew-cask
+	brew-cask
 	plan9port
 	go
 	postgresql93
@@ -74,15 +74,30 @@ if [ "$(which brew)" = "" ]; then
 	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
 	echo "--> Brew v$(brew config|awk '/HOMEBREW_VERSION/ {print $2}') found, updating" 
-	brew update
+	brew update && \
+		brew upgrade brew-cask && \
+		brew cleanup && \
+		brew cask cleanup
+	if ! `brew doctor 1>/dev/null`; then
+		echo "--> Brew doctor found issues, resolve them later"
+	fi
 fi
 
+# set cellar path
+CELLAR=$(brew config|awk '/^HOMEBREW_CELLAR/{print $2}')
+CASKROOM="/opt/homebrew-cask/Caskroom"
+
+
 for formula in $BREWS; do
-	brew list $formula >/dev/null || brew install $formula
+	if [ ! -d $CELLAR/$formula ]; then
+		brew install $formula
+	fi
 done
 
 for cask in $CASKS; do
-	brew cask list $cask >/dev/null || brew cask install $cask
+	if [ ! -d $CASKROOM/$cask ]; then
+		brew-cask install $cask
+	fi
 done
 
 echo "--> Installing RVM"
@@ -122,7 +137,7 @@ else
 	mkdir -p $HOME/.profile.d
 fi
 
-if [ ! $(egrep -o '\.profile\.d' $HOME/.profile) ]; then
+if [[ ! $(egrep -o '\.profile\.d' $HOME/.profile) ]]; then
 	echo '--> Enabling $HOME/.profile.d in $HOME/.profile ..'
 	echo 'for profile in $HOME/.profile.d/*.sh; do source $profile; done' >> $HOME/.profile
 fi
