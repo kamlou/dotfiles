@@ -49,7 +49,7 @@ BREWS="
 	caskroom/cask/brew-cask
 	plan9port
 	go
-	postgresql
+	postgresql93
 	tmux
 	hub
 	bzr
