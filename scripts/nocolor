@@ -1,0 +1,4 @@
+#!/bin/bash
+# strips color from stdin
+
+exec sed -E "s/"$'\E'"\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]//g"

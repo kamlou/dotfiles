@@ -1,0 +1,9 @@
+#!/bin/bash
+
+nocolor=$(which nocolor)
+
+if test -z "$nocolor"; then
+	echo "error: nocolor missing"
+	exit 1
+fi
+exec forego "$@" | nocolor
