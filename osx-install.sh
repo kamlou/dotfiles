@@ -53,6 +53,11 @@ BREWS="
 	tmux
 	hub
 	bzr
+	s3cmd
+	lastpass-cli
+	todo-txt
+	hub
+	gist
 "
 
 CASKS="

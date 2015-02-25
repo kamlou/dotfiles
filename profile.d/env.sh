@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 PATH=$PATH:$HOME/bin
 TTY=$(tty)
 
